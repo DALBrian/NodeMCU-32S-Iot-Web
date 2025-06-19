@@ -1,15 +1,40 @@
 #include <Arduino.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
 #include "DHT.h"
 #define DHT_PIN 25U
 #define DHT_TYPE DHT22
+
+const char* ssid = "HITRON-2-1";
+const char* password = "XXXXX";
+const char* serverUrl = "http://YOUR_SERVER_IP:5000/upload";
 
 DHT dht(DHT_PIN, DHT_TYPE);
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("ESP32 startup successful. ");
+  Serial.println("[INFO] Serial startup successful. ");
+
   dht.begin();
-  Serial.println("Initialize DHT module.");
+  Serial.println("[INFO] DHT startup successful.");
+
+  WiFi.begin(ssid, password);
+
+  uint16_t WiFiTimeout = 0U;
+  while((WiFi.status() != WL_CONNECTED) && (WiFiTimeout < 0xFFU))
+  {
+    Serial.println("[INFO] Connecting to WiFi...");
+    WiFiTimeout++;
+    delay(1000);
+  }
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    Serial.println("[INFO] WiFi connect successful.");
+  }
+  else
+  {
+    Serial.println("[WARNING] WiFi connect timeout.");
+  }
 }
 
 void loop() {

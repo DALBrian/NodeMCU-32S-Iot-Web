@@ -69,11 +69,10 @@ NodeMCU-32S-Iot-Web/
 
 ## To Be Done List:
 ### ESP-32
-1. Implement Wi-Fi utility.
-2. Seperate functions into libraries for better maintenance.
-3. Use EEPROM for datastorage and recover.
-4. Use watchdog for system monitoring.
-5. Add recover mechaism when Wi-Fi failure or power lost.
+1. Seperate functions into libraries for better maintenance.
+2. Use EEPROM for datastorage and recover.
+3. Use watchdog for system monitoring.
+4. Add recover mechaism when Wi-Fi failure or power lost.
 
 ### Flask
 1. Dockerlized Flask server.
