@@ -66,7 +66,7 @@ NodeMCU-32S-Iot-Web/
 1. Open terminal or powershell
 2. Create a virtual environment name "venv" `python -m venv venv`
 3. Open the environment `.\venv\Scripts\activate`
-4. Install flask dependency `RUN pip install flask`
+4. Install flask dependency `pip install flask`
 5. Run server `python app.py`
 
 ---
@@ -93,9 +93,9 @@ NodeMCU-32S-Iot-Web/
 ## To Be Done List:
 ### ESP-32
 1. Seperate functions into libraries for better maintenance.
-2. Use EEPROM for datastorage and recover.
 3. Use watchdog for system monitoring.
 4. Add recover mechaism when Wi-Fi failure or power lost.
+5. Sensor calibration mechanism.(ongoing)
 
 ### Flask
 1. Dockerlized Flask server.

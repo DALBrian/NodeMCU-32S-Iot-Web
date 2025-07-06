@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import sqlite3
 from datetime import datetime
+import socket
 
 app = Flask(__name__)
 
@@ -28,7 +29,29 @@ def get_data():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html') # Display sensor data
+
+@app.route('/calibrate')
+def calibrate():
+    return render_template('calibrate.html') # Sensor re-calibration
+
+def run_flask(Ip, Port):
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind((Ip, Port))
+        print(f"[INFO] Flask Server running on: {Ip}:{Port}")
+        app.run(host=Ip, port=Port)
+        return True
+    except OSError as e:
+        print(f"[ERROR] {Ip}:{Port} is not available to bind {e}")
+        return False
 
 if __name__ == '__main__':
-    app.run(host='192.168.137.1', port=5000)
+    Port = 5000
+    IpAddress = ["192.168.137.1", "127.0.0.1", "192.168.1.1"]
+    for Ip in IpAddress:
+        if run_flask(Ip, Port):
+            break
+        else:
+            print(f"[Error] All IP addresses are not available to start Flask server.")
+
