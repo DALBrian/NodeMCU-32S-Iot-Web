@@ -47,9 +47,11 @@
   </div>
 
   <div class="main-content">
-    <h2>Recent Temperature and Humidity Readings</h2>
-    <canvas id="myChart" width="800" height="400"></canvas>
-  <script src="/static/script.js"></script>
+    {% block content %}
+      <h2>Recent Temperature and Humidity Readings</h2>
+      <canvas id="myChart" width="800" height="400"></canvas>
+      <script src="/static/script.js"></script>
+    {% endblock %}
   </div>
 </body>
 </html>

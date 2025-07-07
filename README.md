@@ -12,6 +12,7 @@ A complete IoT project using an ESP32 (NodeMCU-32S) development board to collect
 ## Features
 
 - ESP32-based data acquisition using DHT22 sensor
+- Fetch sensor calibration data when system startup
 - Send temperature and humidity data via HTTP POST to Flask server
 - SQLite for simple and lightweight storage
 - REST API endpoints for data access
@@ -68,6 +69,7 @@ NodeMCU-32S-Iot-Web/
 3. Open the environment `.\venv\Scripts\activate`
 4. Install flask dependency `pip install flask`
 5. Run server `python app.py`
+6. Use web browser to open server webpage to explore history data and upload sensor calibration data.
 
 ---
 

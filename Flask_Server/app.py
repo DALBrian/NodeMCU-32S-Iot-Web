@@ -19,6 +19,17 @@ def upload():
     insert_data(data['temperature'], data['humidity'])
     return jsonify({"status": "ok"})
 
+@app.route('/api/calibration', methods=['GET'])
+def get_calibration():
+    with sqlite3.connect("data.db") as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT temp_offset, humidity_offset FROM calibration ORDER BY timestamp DESC LIMIT 1")
+        row = cur.fetchone()
+        if row:
+            return jsonify({"temp_offset": row[0], "humidity_offset": row[1]})
+        else:
+            return jsonify({"temp_offset": 0.0, "humidity_offset": 0.0})
+
 @app.route('/data')
 def get_data():
     with sqlite3.connect("data.db") as conn:
@@ -31,9 +42,26 @@ def get_data():
 def index():
     return render_template('index.html') # Display sensor data
 
-@app.route('/calibrate')
+@app.route('/calibrate', methods=['GET', 'POST'])
 def calibrate():
-    return render_template('calibrate.html') # Sensor re-calibration
+    if request.method == 'POST':
+        temp_offset = float(request.form['temp_offset'])
+        humidity_offset = float(request.form['humidity_offset'])
+
+        with sqlite3.connect("data.db") as conn:
+            cur = conn.cursor()
+            cur.execute("""CREATE TABLE IF NOT EXISTS calibration (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        timestamp TEXT,
+                        temp_offset REAL,
+                        humidity_offset REAL
+                    )""")
+            cur.execute("INSERT INTO calibration (timestamp, temp_offset, humidity_offset) VALUES (?, ?, ?)",
+                        (datetime.now().isoformat(), temp_offset, humidity_offset))
+            conn.commit()
+            return render_template("successful.html")
+    else:
+        return render_template('calibrate.html') # Sensor re-calibration
 
 def run_flask(Ip, Port):
     try:
