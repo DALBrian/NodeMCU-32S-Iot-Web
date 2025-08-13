@@ -8,6 +8,16 @@ A complete IoT project using an ESP32 (NodeMCU-32S) development board to collect
 
 [ESP32] --(via HTTP POST)--> [Flask API Server (Python)] --> [SQLite / CSV] --> [Web UI]
 
+### ESP32 Flowchart
+Overall process as below flowchart, including two processes: 1) Initialization. 2) Loop
+![Overall](Flask_Server/image/Overall.png)
+
+Initialization process starts WiFI, DHT sensor and HTTP modules. Also, it will fetch calibration if available.
+![Initialization](Flask_Server/image/Init.png)
+
+Loop process responsible for reading temperature and himidity data, then send the data to Flask server.
+![Loop](Flask_Server/image/Loop.png)
+
 ---
 ## Features
 
