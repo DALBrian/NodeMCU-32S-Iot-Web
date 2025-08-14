@@ -40,3 +40,4 @@ NodeMCU-32S-Iot-Web.code-workspace
 
 #Python venv
 /Flask_Server/venv
+data.db
